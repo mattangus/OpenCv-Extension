@@ -14,6 +14,8 @@ set(CMAKE_BUILD_TYPE Debug)
 #pass flags to c++ compiler
 set(CUDA_PROPAGATE_HOST_FLAGS ON)
 
+add_subdirectory(external/ecuda)
+
 set(MAIN_SRC
 	"src/main.cu"
 	"src/ops.cu"

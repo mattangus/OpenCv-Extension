@@ -109,6 +109,27 @@ namespace ops
         }
     }
 
+    template<typename dtype> __global__
+    void mapColours(dtype* from, dtype* to, dtype* map, int N, int M)
+    {
+        CUDA_1D_KERNEL_LOOP(i, N)
+        {
+            if(i % 3 == 0)
+            {
+                int b = from[i];
+                int g = from[i+1];
+                int r = from[i+2];
+                int ind = ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
+                if(ind < M)
+                {
+                    to[i] = map[ind];
+                    to[i+1] = map[ind];
+                    to[i+2] = map[ind];
+                }
+            }
+        }
+    }
+
     DECLARE_FUNC(MULTIPLY_FUNC);
     DECLARE_FUNC(DIVIDE_FUNC);
     DECLARE_FUNC(ADD_FUNC);

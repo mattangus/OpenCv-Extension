@@ -141,4 +141,12 @@ public:
         gpuErrchk( cudaPeekAtLastError() );
         gpuErrchk( cudaDeviceSynchronize() );
     }
+
+    void mapColours(GpuMat<dtype>& to, GpuVector<dtype>& map)
+    {
+        //void mapColours(dtype* from, dtype* to, dtype* map, int N)
+        LAUNCH(ops::mapColours<dtype>)(gpu_data, to.gpu_data, map.gpu_data, numElem, map.numElem);
+        gpuErrchk( cudaPeekAtLastError() );
+        gpuErrchk( cudaDeviceSynchronize() );
+    }
 };
